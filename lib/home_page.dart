@@ -12,12 +12,21 @@ class _HomePageState extends State<HomePage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
+
+  //function
+   validateInformation(String email, String password)
+  {
+    Fluttertoast.showToast(msg: "Email: "+email+" Password: "+password);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.blue,
-          title: Text('Flutter TextField Example'),
+          title: Text('TextField Example',style: TextStyle(
+            color: Colors.white
+          ),),
         ),
         body: Padding(
             padding: EdgeInsets.all(15),
@@ -29,7 +38,9 @@ class _HomePageState extends State<HomePage> {
                       controller: emailController,
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
-                        border: OutlineInputBorder(),
+
+                      //  border: UnderlineInputBorder(), for only under line input field
+                        border: OutlineInputBorder(),  //round box input field
                         labelText: 'Email',
                         hintText: 'Enter Your Name',
                         prefixIcon: const Icon(Icons.email),
@@ -46,7 +57,7 @@ class _HomePageState extends State<HomePage> {
                         border: OutlineInputBorder(),
                         labelText: 'Password',
                         hintText: 'Enter Your Password',
-                        prefixIcon: const Icon(Icons.password),
+                        prefixIcon: const Icon(Icons.lock),
                       ),
                     ),
                   ),
@@ -64,21 +75,32 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                         onPressed: (){
-                          // Fluttertoast.showToast(
-                          //     msg: "This is Center Short Toast",
-                          //     toastLength: Toast.LENGTH_SHORT,
-                          //    // gravity: ToastGravity.CENTER,
-                          //     timeInSecForIosWeb: 1,
-                          //     // backgroundColor: Colors.red,
-                          //     // textColor: Colors.white,
-                          //     fontSize: 16.0
-                          // );
 
-                          Fluttertoast.showToast(msg: "Email:"+emailController.text+" Password:"+passwordController.text);
+                          String email=emailController.text;
+                          String password=passwordController.text;
+
+                          if(!email.contains("@") || !email.contains("."))
+                            {
+                              Fluttertoast.showToast(msg: "Invalid Email");
+                            }
+                          else if(password.length < 4)
+                            {
+                              Fluttertoast.showToast(msg: "Password minimum 4 digit");
+                            }
+                          else
+                            {
+                              validateInformation(email, password);
+                            }
+
+
+
 
                         },
                         child: Text("Submit",style: const TextStyle(color: Colors.white),)),
                   ),
+
+
+              //IconButton
 
 
                 ],
